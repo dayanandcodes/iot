@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Capture Image - TrackGuard</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('about') }}">About</a>
+    </nav>
+
+    <div class="container">
+        <div class="capture-content">
+            <h2>Capture Image</h2>
+            <button onclick="captureImage()">📸 Capture</button>
+            <div class="preview">
+                <img id="capturedImage" src="#" alt="Captured Image" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function captureImage() {
+            document.getElementById('capturedImage').style.display = 'block';
+            document.getElementById('capturedImage').src = '/path/to/captured/image'; // Placeholder path
+        }
+    </script>
+</body>
+</html>

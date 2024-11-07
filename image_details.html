@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Details - TrackGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        {% if role == 'admin' %}
+            <a href="{{ url_for('manual_controls') }}">Manual Controls</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('about') }}">About</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <div class="detected-image">
+            <h2>Detection Details</h2>
+            <img src="{{ url_for('static', filename='detection_results/' + image_name) }}" alt="Detected Object">
+            <p><strong>📅 Date:</strong> {{ timestamp }}</p>
+            <p><strong>📍 Location:</strong> {{ latitude }}, {{ longitude }}</p>
+            <a href="https://www.google.com/maps/search/?api=1&query={{ latitude }},{{ longitude }}" 
+               target="_blank" 
+               class="map-button">Open Map 🗺️</a>
+            <br><br>
+            <a href="{{ url_for('history') }}" class="button">Back to History</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,300 @@
+/* General Styles */
+:root {
+    --primary-color: #2C3E50;
+    --secondary-color: #3498DB;
+    --accent-color: #E74C3C;
+    --background-color: #ECF0F1;
+    --text-color: #2C3E50;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    position: relative;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Blurred, fixed background image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/train.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px); /* Apply blur only to the background image */
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    position: relative;
+    z-index: 1; /* Ensure container is above the blurred background */
+}
+
+/* Navigation Bar */
+nav {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Flash messages */
+.flash {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.flash.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Login and Register Forms */
+.login-form, .register-form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+.login-form h2, .register-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-form label, .register-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.login-form input, .register-form input, .register-form select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-form .button, .register-form .button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form .button:hover, .register-form .button:hover {
+    background-color: #2980b9;
+}
+
+/* Detection Display */
+.detected-image {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.detected-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.detected-image p {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Coordinates Section */
+.coordinates {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.map-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.map-button:hover {
+    background-color: #2980b9;
+}
+
+/* Manual Control Section */
+.manual-control {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Manual Controls Page */
+.live-video {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.control-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 2rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.control-button:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.capture-button {
+    grid-column: span 3;
+    background-color: var(--accent-color);
+}
+
+/* History Page */
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.history-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.history-item:hover {
+    transform: translateY(-5px);
+}
+
+.history-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.history-item-info {
+    padding: 1rem;
+}
+
+.history-item-info p {
+    margin-bottom: 0.5rem;
+}
+
+/* About Page */
+.about-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+.about-content h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.about-content p {
+    margin-bottom: 1rem;
+}

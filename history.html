@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection History - TrackGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        {% if role == 'admin' %}
+            <a href="{{ url_for('manual_controls') }}">Manual Controls</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('about') }}">About</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center; margin: 2rem 0; color: var(--primary-color);">Detection History</h1>
+        
+        <div class="history-grid">
+            {% for image in detected_images %}
+            <div class="history-item">
+                <a href="{{ url_for('image_details', image_name=image.name) }}">
+                    <img src="{{ url_for('static', filename='detection_results/' + image.name) }}" 
+                         alt="Detection {{ image.timestamp }}">
+                </a>
+                <div class="history-item-info">
+                    <p><strong>📅 Date:</strong> {{ image.timestamp }}</p>
+                    <p><strong>📍 Location:</strong> {{ image.latitude }}, {{ image.longitude }}</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ image.latitude }},{{ image.longitude }}" 
+                       target="_blank" 
+                       class="map-button">View Location 🗺️</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

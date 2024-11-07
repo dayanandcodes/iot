@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register User - TrackGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        {% if role == 'admin' %}
+            <a href="{{ url_for('manual_controls') }}">Manual Controls</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('about') }}">About</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <div class="register-form">
+            <h2>Register New User</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('register') }}">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+
+                <label for="role">Role:</label>
+                <select name="role" id="role" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <button type="submit" class="button">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

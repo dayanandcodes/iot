@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackGuard Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta http-equiv="refresh" content="10"> <!-- Auto-refresh every 10 seconds -->
+
+    <style>
+        /* Styling for the map container */
+        #map {
+            height: 600px;
+            width: 100%;
+            position: relative;
+        }
+        #location-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        {% if role == 'admin' %}
+            <a href="{{ url_for('manual_controls') }}">Manual Controls</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('about') }}">About</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <div class="detected-image">
+            <h2>Live Detection</h2>
+            {% if detected_image %}
+                <img src="{{ url_for('static', filename='detection_results/' + detected_image) }}" alt="Detected Object">
+                <p>⚠️ Object Detected on Track ⚠️</p>
+            {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="No Image Detected">
+                <p>No Object Detected</p>
+            {% endif %}
+        </div>
+
+        <div class="coordinates">
+            <p>Current Location: <strong>{{ latitude }}, {{ longitude }}</strong></p>
+            <a href="https://www.google.com/maps/search/?api=1&query={{ latitude }},{{ longitude }}" 
+               target="_blank" 
+               class="map-button">Open Map 🗺️</a>
+        </div>
+
+        <!-- Map container -->
+        <div id="map"></div> <!-- Google Map will be embedded here -->
+
+        {% if role == 'admin' %}
+            <div class="manual-control">
+                <a href="{{ url_for('manual_controls') }}" class="button">Manual Control 🎮</a>
+                <p>Access manual controls to operate the TrackGuard system remotely.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Google Maps JS API (replace 'YOUR_API_KEY' with your actual API key) -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+
+    <script>
+        let map;
+        let marker;
+        let infoWindow;
+        let latestLocation = { Latitude: {{ latitude }}, Longitude: {{ longitude }} }; // Use template variables from Flask
+
+        // Initialize the map
+        function initMap() {
+            // Create the map centered at the current location
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: latestLocation.Latitude, lng: latestLocation.Longitude },
+                zoom: 15, // Set initial zoom level
+            });
+
+            // Create a marker at the initial location
+            marker = new google.maps.Marker({
+                position: { lat: latestLocation.Latitude, lng: latestLocation.Longitude },
+                map: map,
+                title: "Device Location",
+            });
+
+            // Create an info window to display latitude and longitude
+            infoWindow = new google.maps.InfoWindow({
+                content: `Latitude: ${latestLocation.Latitude}, Longitude: ${latestLocation.Longitude}`,
+            });
+
+            // Attach the info window to the marker
+            infoWindow.open(map, marker);
+        }
+
+        // Function to fetch location data from the API and update the map
+        async function fetchData() {
+            try {
+                const response = await fetch('https://5y3jsrp5qf.execute-api.us-east-1.amazonaws.com/prod/trackData');
+                const data = await response.json();
+
+                // Assuming the API returns an array of location objects
+                data.forEach(location => {
+                    const { Latitude, Longitude } = location.payload;
+
+                    // Update the latest location
+                    latestLocation = { Latitude, Longitude };
+
+                    // Move the marker to the new location
+                    marker.setPosition(new google.maps.LatLng(Latitude, Longitude));
+
+                    // Update the map's center position
+                    map.setCenter(new google.maps.LatLng(Latitude, Longitude));
+
+                    // Update the info window content
+                    infoWindow.setContent(`Latitude: ${Latitude}, Longitude: ${Longitude}`);
+
+                    // Optionally, update the latitude and longitude in the page dynamically
+                    document.querySelector('.coordinates strong').textContent = `${Latitude}, ${Longitude}`;
+                });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        // Update the location every 5 seconds by fetching data
+        setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>About TrackGuard</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('about') }}">About</a>
+    </nav>
+
+    <div class="container">
+        <div class="about-content">
+            <h1>About TrackGuard</h1>
+            
+            <h2>🚂 Our Mission</h2>
+            <p>
+                TrackGuard is an innovative railway track monitoring system designed to enhance safety and efficiency 
+                in railway operations. Our system uses advanced object detection technology to identify potential 
+                obstacles and hazards on railway tracks in real-time.
+            </p>
+
+            <h2>🔍 Key Features</h2>
+            <ul style="list-style-type: none; padding: 1rem 0;">
+                <li>✅ Real-time object detection using YOLO11x-seg model</li>
+                <li>✅ Live video monitoring capabilities</li>
+                <li>✅ Remote manual control options</li>
+                <li>✅ Comprehensive detection history</li>
+                <li>✅ GPS location tracking</li>
+                <li>✅ Instant alerts and warnings</li>
+            </ul>
+
+            <h2>🛠️ Technology</h2>
+            <p>
+                TrackGuard utilizes state-of-the-art technology including:
+            </p>
+            <ul style="list-style-type: none; padding: 1rem 0;">
+                <li>🔹 Advanced YOLO object detection</li>
+                <li>🔹 Arduino-based hardware implementation</li>
+                <li>🔹 Real-time video processing</li>
+                <li>🔹 GPS integration</li>
+                <li>🔹 Web-based monitoring interface</li>
+            </ul>
+
+            <h2>👥 Contact Us</h2>
+            <p>
+                For more information about TrackGuard or to report any issues, please contact our support team:
+            </p>
+            <p style="margin-top: 1rem;">
+                📧 Email: support@trackguard.com<br>
+                📞 Phone: +910000000000<br>
+                🌐 Website: www.trackguard.com
+            </p>
+        </div>
+    </div>
+</body>
+</html>

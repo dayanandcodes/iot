@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Manual Controls - TrackGuard</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('about') }}">About</a>
+    </nav>
+
+    <div class="container">
+        <div class="live-video">
+            <h2>Live Video Feed</h2>
+            <video id="videoFeed" autoplay playsinline style="width: 60%; border-radius: 8px;">
+                Your browser doesn't support video playback.
+            </video>
+        </div>
+
+        <div class="controls">
+            
+            <button class="control-button" style="grid-column: 2/3;">Forward ⬆️</button>
+            <button class="control-button" style="grid-column: 1/2;">Start 🚀</button>
+            <button class="control-button capture-button" style="grid-column: 2/2;" >Capture Image 📸</button>
+            <button class="control-button" style="grid-column: 3/3;">Stop 🛑</button>
+            <button class="control-button" style="grid-column: 2/3;">Backward ⬇️</button>
+            
+        </div>
+    </div>
+
+    <script>
+        // Add keyboard controls
+        document.addEventListener('keydown', function(event) {
+            switch(event.key) {
+                case 'ArrowUp':
+                    document.querySelector('button:nth-child(1)').click();
+                    break;
+                case 'ArrowRight':
+                    document.querySelector('button:nth-child(4)').click();
+                    break;
+                case ' ':
+                    document.querySelector('button:nth-child(3)').click();
+                    break;
+                case 'c':
+                    document.querySelector('.capture-button').click();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
